@@ -1,0 +1,6 @@
+[submodule "libraries/Adafruit_FXAS21002C"]
+	path = libraries/Adafruit_FXAS21002C
+	url = https://github.com/adafruit/Adafruit_FXAS21002C
+[submodule "libraries/Adafruit_FXOS8700"]
+	path = libraries/Adafruit_FXOS8700
+	url = https://github.com/adafruit/Adafruit_FXOS8700
