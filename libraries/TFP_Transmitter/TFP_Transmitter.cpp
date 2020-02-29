@@ -13,6 +13,12 @@ TFP_Transmitter::TFP_Transmitter()
 bool TFP_Transmitter::begin(int ppm_channel){
     Serial.println("Setting up PPM");
     ppm.begin(ppm_channel);
+
+    while (ppm.available() < 0) {
+        delay(10);
+    }
+    update();
+
     Serial.println("PPM setup");
     return true;
 };
@@ -34,3 +40,13 @@ void TFP_Transmitter::calibrate() {
     left_switch.calibrate();
     right_switch.calibrate();
 };
+
+void TFP_Transmitter::print_state(){
+    Serial.println("\nCurrent transmitter state:");
+    left_stick.print_state();
+    right_stick.print_state();
+    left_knob.print_state();
+    right_knob.print_state();
+    left_switch.print_state();
+    right_switch.print_state();
+}

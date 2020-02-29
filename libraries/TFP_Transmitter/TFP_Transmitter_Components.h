@@ -12,6 +12,8 @@ namespace Transmitter_components {
         virtual bool is_calibrated() = 0;
 
         virtual void update() = 0;
+
+        virtual void print_state() = 0;
     };
 
     class Switch : public Transmitter_component {
@@ -25,14 +27,19 @@ namespace Transmitter_components {
         bool is_calibrated();
 
         void update();
+
+        void print_state();
+
         bool value;
 
     private:
         PulsePositionInput *ppm;
         int channel;
         const char *name;
-        int raw_cen;
-        bool calibrated;
+        int raw_cen = 1500;
+        int raw_value;
+        bool calibrated = false;
+        int calibration_timeout = 10000;
     };
 
     class Knob : public Transmitter_component {
@@ -47,17 +54,20 @@ namespace Transmitter_components {
 
         void update();
 
+        void print_state();
+
         int value;
 
     private:
         PulsePositionInput *ppm;
         int channel;
         const char *name;
-        int raw_max;
-        int raw_min;
-        int raw_cen;
+        int raw_max = 2000;
+        int raw_min = 1000;
+        int raw_cen = 1500;
         int raw_value;
-        bool calibrated;
+        bool calibrated = false;
+        int calibration_timeout = 10000;
     };
 
 
@@ -75,6 +85,8 @@ namespace Transmitter_components {
         bool is_calibrated();
 
         void update();
+
+        void print_state();
 
     private:
         const char *name;

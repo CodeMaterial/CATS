@@ -14,6 +14,6 @@ void setup() {
 };
 
 void loop() {
-    transmitter.update();
-    Serial.println(transmitter.left_stick.x.value);
+    transmitter.calibrate();
+    while(true){delay(1000);}
 };

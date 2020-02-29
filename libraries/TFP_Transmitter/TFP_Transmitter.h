@@ -13,6 +13,8 @@ public:
 
     bool begin(int ppm_channel);
 
+    void print_state();
+
 public:
     Transmitter_components::Stick left_stick;
     Transmitter_components::Stick right_stick;
