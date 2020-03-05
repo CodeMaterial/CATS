@@ -18,27 +18,27 @@ void Transmitter_components::Switch::calibrate() {
     Serial.print("\n\n>> Please flip the ");
     Serial.println(name);
 
-    for (int i = 0; i < (calibration_timeout / 10); i++) {
+    for (int i = 0; i < (calibration.calibration_timeout / 10); i++) {
         delay(10);
         update();
         if (abs(previous_raw_value - raw_value) > 100) {
-            raw_cen = (previous_raw_value + raw_value) / 2;
-            calibrated = true;
+            calibration.raw_cen = (previous_raw_value + raw_value) / 2;
+            calibration.calibrated = true;
             break;
         }
     }
     print_state();
     Serial.print(name);
-    Serial.println(calibrated ? " Has been calibrated successfully" : " Has not been calibrated");
+    Serial.println(calibration.calibrated ? " Has been calibrated successfully" : " Has not been calibrated");
 };
 
 bool Transmitter_components::Switch::is_calibrated() {
-    return calibrated;
+    return calibration.calibrated;
 };
 
 void Transmitter_components::Switch::update() {
     raw_value = ppm->read(channel);
-    value = raw_value > raw_cen;
+    value = raw_value > calibration.raw_cen;
 };
 
 Transmitter_components::Knob::Knob(PulsePositionInput *ppm_in, int channel_in)
@@ -63,7 +63,7 @@ void Transmitter_components::Knob::calibrate() {
 
     int resting = value;
 
-    for (int i = 0; i < (calibration_timeout / 10); i++) {
+    for (int i = 0; i < (calibration.calibration_timeout / 10); i++) {
         delay(10);
         update();
         if(abs(value - resting) > 100){
@@ -72,8 +72,8 @@ void Transmitter_components::Knob::calibrate() {
     }
     Serial.println("Recording...");
 
-    int motion_min = raw_cen;
-    int motion_max = raw_cen;
+    int motion_min = calibration.raw_cen;
+    int motion_max = calibration.raw_cen;
     for (int i = 0; i < 300; i++) {
         delay(10);
         update();
@@ -85,24 +85,24 @@ void Transmitter_components::Knob::calibrate() {
         }
     }
     if ((motion_max - motion_min) > 500) {
-        calibrated = true;
-        raw_min = motion_min;
-        raw_max = motion_max;
-        raw_cen = (motion_max + motion_min) / 2;
+        calibration.calibrated = true;
+        calibration.raw_min = motion_min;
+        calibration.raw_max = motion_max;
+        calibration.raw_cen = (motion_max + motion_min) / 2;
     }
 
     print_state();
     Serial.print(name);
-    Serial.println(calibrated ? " Has been calibrated successfully" : " Has not been calibrated");
+    Serial.println(calibration.calibrated ? " Has been calibrated successfully" : " Has not been calibrated");
 };
 
 bool Transmitter_components::Knob::is_calibrated() {
-    return calibrated;
+    return calibration.calibrated;
 };
 
 void Transmitter_components::Knob::update() {
     raw_value = ppm->read(channel);
-    value = map(raw_value, raw_min, raw_max, 0, 1000);
+    value = map(raw_value, calibration.raw_min, calibration.raw_max, 0, 1000);
 };
 
 Transmitter_components::Stick::Stick(PulsePositionInput *ppm, int x_channel, int y_channel)
@@ -143,7 +143,7 @@ void Transmitter_components::Switch::print_state() {
     Serial.print(" | raw: ");
     Serial.print(raw_value);
     Serial.print(" | center: ");
-    Serial.print(raw_cen);
+    Serial.print(calibration.raw_cen);
     Serial.print(" | calibrated: ");
     Serial.println(is_calibrated());
 };
@@ -157,13 +157,13 @@ void Transmitter_components::Knob::print_state() {
     Serial.print(" | raw: ");
     Serial.print(raw_value);
     Serial.print(" | min: ");
-    Serial.print(raw_min);
+    Serial.print(calibration.raw_min);
     Serial.print(" | center: ");
-    Serial.print(raw_cen);
+    Serial.print(calibration.raw_cen);
     Serial.print(" | max: ");
-    Serial.print(raw_max);
+    Serial.print(calibration.raw_max);
     Serial.print(" | calibrated: ");
-    Serial.println(is_calibrated());
+    Serial.println(calibration.calibrated);
 };
 
 void Transmitter_components::Stick::print_state() {

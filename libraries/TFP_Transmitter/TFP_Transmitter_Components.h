@@ -5,11 +5,19 @@
 
 namespace Transmitter_components {
 
+    struct Calibration{
+        int raw_max = 2000;
+        int raw_min = 1000;
+        int raw_cen = 1500;
+        bool calibrated = false;
+        int calibration_timeout = 10000;
+    };
+
     class Transmitter_component {
     public:
         virtual void calibrate() = 0;
 
-        virtual bool is_calibrated() = 0;
+        bool is_calibrated();
 
         virtual void update() = 0;
 
@@ -36,10 +44,8 @@ namespace Transmitter_components {
         PulsePositionInput *ppm;
         int channel;
         const char *name;
-        int raw_cen = 1500;
         int raw_value;
-        bool calibrated = false;
-        int calibration_timeout = 10000;
+        Calibration calibration;
     };
 
     class Knob : public Transmitter_component {
@@ -62,12 +68,8 @@ namespace Transmitter_components {
         PulsePositionInput *ppm;
         int channel;
         const char *name;
-        int raw_max = 2000;
-        int raw_min = 1000;
-        int raw_cen = 1500;
         int raw_value;
-        bool calibrated = false;
-        int calibration_timeout = 10000;
+        Calibration calibration;
     };
 
 
