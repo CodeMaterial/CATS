@@ -4,3 +4,6 @@
 [submodule "libraries/Adafruit_FXOS8700"]
 	path = libraries/Adafruit_FXOS8700
 	url = https://github.com/adafruit/Adafruit_FXOS8700
+[submodule "libraries/Adafruit_Sensor"]
+	path = libraries/Adafruit_Sensor
+	url = https://github.com/adafruit/Adafruit_Sensor
