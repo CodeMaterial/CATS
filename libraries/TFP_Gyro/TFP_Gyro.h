@@ -12,17 +12,15 @@ public:
 
     void update();
 
-    void reset_heading();
-
     void calibrate();
 
 public:
-    float heading;
-    float velocity;
+    float heading = 0; // in radians
+    float velocity = 0; // in radians per second
 
 private:
     Adafruit_FXAS21002C gyro;
     sensors_event_t event;
-    float bias;
-    long float time_since_update;
+    float bias = 0; // in radians per second
+    long float last_update = 0;
 }

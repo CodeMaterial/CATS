@@ -1,34 +1,37 @@
 #include "TFP_Gyro.h"
 
-#include <Adafruit_FXAS21002C.h>
-#include <Adafruit_Sensor.h>
-#include <Wire.h>
 
-
-Gyro::Gyro(): gyro(0x0021002C){
+Gyro::Gyro() : gyro(0x0021002C) {
 
 };
 
-bool Gyro::begin(){
-    gyro.begin(GYRO_RANGE_1000DPS)
+bool Gyro::begin() {
+    gyro.begin(GYRO_RANGE_1000DPS);
+    last_update = millis();
 };
 
-void Gyro::update(){
+void Gyro::update() {
+
+    long float now = millis();
+
     gyro.getEvent(&event);
-    velocity = event.gyro.z - rotation_bias;
-//    heading += (event.gyro.z)/20.0;
+    velocity = event.gyro.z - bias;
+    heading += (event.gyro.z) * (now - last_update) / 1000);
+    last_update = now;
 };
 
-void Gyro::reset_heading(){
+void Gyro::calibrate() {
 
-};
+    bias = 0;
+    heading = 0;
 
-void Gyro::calibrate(){
+    long float start_time = millis();
+    for (int i = 0; i < 100; i++) {
+        update();
+        delay(20);
+    }
+    long float duration_in_seconds = (millis() - start_time) / 1000;
+    bias = heading / duration_in_seconds;
 
-};
-
-
-//float heading;
-//float velocity;
-//float bias;
-//long float time_since_update;
+    heading = 0;
+}
