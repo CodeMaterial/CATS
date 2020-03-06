@@ -11,6 +11,8 @@ public:
 
     void calibrate();
 
+    void load_calibration();
+
     bool begin(int ppm_channel);
 
     void print_state();

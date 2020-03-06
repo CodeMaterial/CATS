@@ -1,4 +1,5 @@
 #include "TFP_Transmitter.h"
+#include <EEPROM.h>
 
 Transmitter_components::Switch::Switch(PulsePositionInput *ppm_in, int channel_in)
         : ppm(ppm_in),
@@ -30,7 +31,16 @@ void Transmitter_components::Switch::calibrate() {
     print_state();
     Serial.print(name);
     Serial.println(calibration.calibrated ? " Has been calibrated successfully" : " Has not been calibrated");
+    save_calibration();
 };
+
+void Transmitter_components::Switch::save_calibration() {
+    EEPROM.put(channel * sizeof(calibration), calibration);
+}
+
+void Transmitter_components::Switch::load_calibration() {
+    EEPROM.get(channel * sizeof(calibration), calibration);
+}
 
 bool Transmitter_components::Switch::is_calibrated() {
     return calibration.calibrated;
@@ -94,7 +104,17 @@ void Transmitter_components::Knob::calibrate() {
     print_state();
     Serial.print(name);
     Serial.println(calibration.calibrated ? " Has been calibrated successfully" : " Has not been calibrated");
+    save_calibration();
 };
+
+void Transmitter_components::Knob::save_calibration() {
+    EEPROM.put(channel * sizeof(calibration), calibration);
+}
+
+void Transmitter_components::Knob::load_calibration() {
+    EEPROM.get(channel * sizeof(calibration), calibration);
+}
+
 
 bool Transmitter_components::Knob::is_calibrated() {
     return calibration.calibrated;
@@ -124,6 +144,16 @@ void Transmitter_components::Stick::calibrate() {
     x.calibrate();
     y.calibrate();
 };
+
+void Transmitter_components::Stick::save_calibration() {
+    x.save_calibration();
+    y.save_calibration();
+}
+
+void Transmitter_components::Stick::load_calibration() {
+    x.load_calibration();
+    y.load_calibration();
+}
 
 bool Transmitter_components::Stick::is_calibrated() {
     return x.is_calibrated() && y.is_calibrated();

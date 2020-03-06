@@ -50,3 +50,12 @@ void TFP_Transmitter::print_state(){
     left_switch.print_state();
     right_switch.print_state();
 }
+
+void TFP_Transmitter::load_calibration() {
+    left_stick.load_calibration();
+    right_stick.load_calibration();
+    left_knob.load_calibration();
+    right_knob.load_calibration();
+    left_switch.load_calibration();
+    right_switch.load_calibration();
+}

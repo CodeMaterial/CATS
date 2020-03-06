@@ -14,6 +14,13 @@ void setup() {
 };
 
 void loop() {
-    transmitter.calibrate();
-    while(true){delay(1000);}
+//    transmitter.left_stick.print_state();
+//    transmitter.left_stick.calibrate();
+//    transmitter.calibrate();
+    transmitter.load_calibration();
+    while (true) {
+        transmitter.update();
+        transmitter.print_state();
+        delay(1000);
+    }
 };

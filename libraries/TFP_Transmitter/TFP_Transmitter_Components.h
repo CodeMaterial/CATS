@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Arduino.h"
+#include <EEPROM.h>
 #include <PulsePosition.h>
 
 namespace Transmitter_components {
@@ -13,24 +13,18 @@ namespace Transmitter_components {
         int calibration_timeout = 10000;
     };
 
-    class Transmitter_component {
-    public:
-        virtual void calibrate() = 0;
 
-        bool is_calibrated();
-
-        virtual void update() = 0;
-
-        virtual void print_state() = 0;
-    };
-
-    class Switch : public Transmitter_component {
+    class Switch {
     public:
         Switch(PulsePositionInput *ppm, int channel);
 
         Switch(PulsePositionInput *ppm, int channel, const char *name);
 
         void calibrate();
+
+        void save_calibration();
+
+        void load_calibration();
 
         bool is_calibrated();
 
@@ -48,13 +42,17 @@ namespace Transmitter_components {
         Calibration calibration;
     };
 
-    class Knob : public Transmitter_component {
+    class Knob {
     public:
         Knob(PulsePositionInput *ppm, int channel);
 
         Knob(PulsePositionInput *ppm, int channel, const char *name);
 
         void calibrate();
+
+        void save_calibration();
+
+        void load_calibration();
 
         bool is_calibrated();
 
@@ -73,7 +71,7 @@ namespace Transmitter_components {
     };
 
 
-    class Stick : public Transmitter_component {
+    class Stick {
     public:
         Stick(PulsePositionInput *ppm, int x_channel, int y_channel);
 
@@ -83,6 +81,10 @@ namespace Transmitter_components {
         Knob y;
 
         void calibrate();
+
+        void save_calibration();
+
+        void load_calibration();
 
         bool is_calibrated();
 
