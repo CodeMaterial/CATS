@@ -6,7 +6,6 @@ Adafruit_FXAS21002C gyro = Adafruit_FXAS21002C(0x0021002C);
 
 
 float heading = 0;
-sensors_event_t event;
 float rotation_drift = 0;
 float noise = 0;
 
