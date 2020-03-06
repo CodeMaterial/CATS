@@ -30,13 +30,13 @@ void Gyro::calibrate() {
         update();
         delay(20);
     }
-    unsigned long duration_in_seconds = (millis() - start_time) / 1000.0;
-    bias = heading / duration_in_seconds;
+    unsigned long calibration_duration_in_millis = millis() - start_time;
+    bias = (1000 * heading) / calibration_duration_in_millis;
 
     heading = 0;
 }
 
-bool Gyro::is_rotating(){
+bool Gyro::is_rotating() {
     update();
     return abs(velocity) > 0.1;
 }
