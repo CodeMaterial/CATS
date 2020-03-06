@@ -16,7 +16,7 @@ void Gyro::update() {
 
     gyro.getEvent(&event);
     velocity = event.gyro.z - bias;
-    heading += (event.gyro.z) * (now - last_update) / 1000);
+    heading += velocity * ((now - last_update) / 1000);
     last_update = now;
 };
 
@@ -34,4 +34,9 @@ void Gyro::calibrate() {
     bias = heading / duration_in_seconds;
 
     heading = 0;
+}
+
+bool Gyro::is_rotating(){
+    update();
+    return abs(velocity) > 0.1;
 }

@@ -14,6 +14,8 @@ public:
 
     void calibrate();
 
+    bool is_rotating();
+
 public:
     float heading = 0; // in radians
     float velocity = 0; // in radians per second
