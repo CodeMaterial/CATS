@@ -1,14 +1,14 @@
 #include "TFP_Transmitter.h"
 #include <EEPROM.h>
 
-Channel_Component::Channel_Component(PulsePositionInput *ppm_in, int channel_in, bool binary_mode_in)
+Transmitter_Component::Transmitter_Component(PulsePositionInput *ppm_in, int channel_in, bool binary_mode_in)
         : ppm(ppm_in),
           channel(channel_in),
           name("Unknown Knob"),
           binary_mode(binary_mode_in) {
 };
 
-Channel_Component::Channel_Component(PulsePositionInput *ppm_in, int channel_in, const char *name_in,
+Transmitter_Component::Transmitter_Component(PulsePositionInput *ppm_in, int channel_in, const char *name_in,
                                      bool binary_mode_in)
         : ppm(ppm_in),
           channel(channel_in),
@@ -17,7 +17,7 @@ Channel_Component::Channel_Component(PulsePositionInput *ppm_in, int channel_in,
 };
 
 
-void Channel_Component::calibrate() {
+void Transmitter_Component::calibrate() {
 
     update();
 
@@ -81,26 +81,26 @@ void Channel_Component::calibrate() {
 
 };
 
-void Channel_Component::save_calibration() {
+void Transmitter_Component::save_calibration() {
     EEPROM.put(channel * sizeof(calibration), calibration);
 }
 
-void Channel_Component::load_calibration() {
+void Transmitter_Component::load_calibration() {
     EEPROM.get(channel * sizeof(calibration), calibration);
 }
 
 
-bool Channel_Component::is_calibrated() {
+bool Transmitter_Component::is_calibrated() {
     return calibration.calibrated;
 };
 
-void Channel_Component::update() {
+void Transmitter_Component::update() {
     raw_value = ppm->read(channel);
     value = map(raw_value, calibration.raw_min, calibration.raw_max, 0, 1000);
 };
 
 
-void Channel_Component::print_state() {
+void Transmitter_Component::print_state() {
     update();
     Serial.print("\n---------------- State of ");
     Serial.print(name);

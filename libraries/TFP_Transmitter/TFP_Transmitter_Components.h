@@ -12,11 +12,11 @@ struct Calibration {
     int calibration_timeout = 10000;
 };
 
-class Channel_Component {
+class Transmitter_Component {
 public:
-    Channel_Component(PulsePositionInput *ppm, int channel, bool binary_mode = false);
+    Transmitter_Component(PulsePositionInput *ppm, int channel, bool binary_mode = false);
 
-    Channel_Component(PulsePositionInput *ppm, int channel, const char *name, bool binary_mode = false);
+    Transmitter_Component(PulsePositionInput *ppm, int channel, const char *name, bool binary_mode = false);
 
     void calibrate();
 
