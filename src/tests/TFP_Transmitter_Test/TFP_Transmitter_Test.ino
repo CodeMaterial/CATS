@@ -15,7 +15,7 @@ void setup() {
 
 void loop() {
 //    transmitter.left_stick.print_state();
-//    transmitter.left_stick.calibrate();
+    transmitter.update();
 //    transmitter.calibrate();
     transmitter.load_calibration();
     while (true) {
