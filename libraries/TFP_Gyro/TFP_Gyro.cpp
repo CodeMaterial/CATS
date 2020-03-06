@@ -25,12 +25,12 @@ void Gyro::calibrate() {
     bias = 0;
     heading = 0;
 
-    long float start_time = millis();
+    unsigned long start_time = millis();
     for (int i = 0; i < 100; i++) {
         update();
         delay(20);
     }
-    long float duration_in_seconds = (millis() - start_time) / 1000;
+    unsigned long duration_in_seconds = (millis() - start_time) / 1000.0;
     bias = heading / duration_in_seconds;
 
     heading = 0;

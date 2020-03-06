@@ -24,5 +24,5 @@ private:
     Adafruit_FXAS21002C gyro;
     sensors_event_t event;
     float bias = 0; // in radians per second
-    long float last_update = 0;
+    unsigned long last_update = 0;
 }
