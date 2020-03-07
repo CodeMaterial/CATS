@@ -12,7 +12,7 @@ public:
 
     void load_calibration();
 
-    bool begin(int ppm_channel);
+    bool begin(int ppm_pin);
 
     void print_state();
 

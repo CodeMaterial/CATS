@@ -1,12 +1,16 @@
 #include "TFP_Drivetrain.h"
 
 Drivetrain::Drivetrain() {
+}
+
+bool Drivetrain::begin(){
     Serial.println("Initialising Drivetrain");
     gyro.begin();
     esc_l.begin(5, &gyro);
     esc_r.begin(6, &gyro);
     esc_l.stop();
     esc_r.stop();
+    return true;
 }
 
 void Drivetrain::calibrate() {
@@ -27,12 +31,12 @@ void Drivetrain::load_calibration() {
     esc_r.load_calibration();
 }
 
-void Drivetrain::SkidSteer(int left, int right) {
+void Drivetrain::skid_steer(int left, int right) {
     esc_l.set_speed(left);
     esc_r.set_speed(right);
 };
 
-void Drivetrain::WheelSteer(int power, int steer) {
+void Drivetrain::wheel_steer(int power, int steer) {
     esc_l.set_speed(power - steer);
     esc_r.set_speed(power + steer);
 };

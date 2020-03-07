@@ -11,15 +11,17 @@ public:
 
     Drivetrain();
 
+    bool begin();
+
     void calibrate();
 
     void save_calibration();
 
     void load_calibration();
 
-    void SkidSteer(int left, int right);
+    void skid_steer(int left, int right);
 
-    void WheelSteer(int power, int steer);
+    void wheel_steer(int power, int steer);
 
 private:
     TFP_Gyro gyro;

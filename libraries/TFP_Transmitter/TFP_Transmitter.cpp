@@ -12,9 +12,9 @@ TFP_Transmitter::TFP_Transmitter()
           right_switch(&ppm, 8, "Right Switch", true) {
 };
 
-bool TFP_Transmitter::begin(int ppm_channel) {
+bool TFP_Transmitter::begin(int ppm_pin) {
     Serial.println("Setting up transmitter PPM");
-    ppm.begin(ppm_channel);
+    ppm.begin(ppm_pin);
 
     while (ppm.available() < 0) {
         delay(10);
