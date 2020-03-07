@@ -1,6 +1,7 @@
 #include "TFP_Drivetrain.h"
 
 Drivetrain::Drivetrain() {
+    Serial.println("Initialising Drivetrain");
     gyro.begin();
     esc_l.begin(5, &gyro);
     esc_r.begin(6, &gyro);
@@ -9,16 +10,19 @@ Drivetrain::Drivetrain() {
 }
 
 void Drivetrain::calibrate() {
+    Serial.println("Calibrating drivetrain");
     esc_l.calibrate();
     esc_r.calibrate();
 };
 
 void Drivetrain::save_calibration() {
+    Serial.println("Saving drivetrain");
     esc_l.save_calibration();
     esc_r.save_calibration();
 }
 
 void Drivetrain::load_calibration() {
+    Serial.println("Loading calibration");
     esc_l.load_calibration();
     esc_r.load_calibration();
 }

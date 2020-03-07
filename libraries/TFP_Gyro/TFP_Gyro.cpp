@@ -5,8 +5,10 @@ TFP_Gyro::TFP_Gyro() {
 };
 
 bool TFP_Gyro::begin() {
+    Serial.println("Initialising gyroscope");
     FXA.begin(GYRO_RANGE_1000DPS);
     last_update = millis();
+    Serial.println("Gyroscope initialised");
     return true;
 };
 
@@ -22,6 +24,10 @@ void TFP_Gyro::update() {
 
 void TFP_Gyro::calibrate() {
 
+    Serial.print("Calibrating gyroscope for ");
+    Serial.print(calibration.calibration_duration);
+    Serial.println(" Seconds");
+
     calibration.bias = 0;
     heading = 0;
 
@@ -35,15 +41,18 @@ void TFP_Gyro::calibrate() {
 
     heading = 0;
 
-    Serial.print("Bias: ");
-    Serial.println(calibration.bias, 4);
+    Serial.print("Calibration bias: ");
+    Serial.print(calibration.bias, 4);
+    Serial.println(" Radians per second.");
 }
 
 void TFP_Gyro::save_calibration() {
+    Serial.println("Saving calibration");
     EEPROM.put(calibration_address, calibration);
 }
 
 void TFP_Gyro::load_calibration() {
+    Serial.println("Loading calibration");
     EEPROM.get(calibration_address, calibration);
 }
 
@@ -53,6 +62,7 @@ bool TFP_Gyro::is_rotating() {
 }
 
 void TFP_Gyro::wait_for_stationary(){
+    Serial.println("Waiting for stationary motion");
     while(is_rotating()){
         delay(10);
     }

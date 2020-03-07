@@ -13,13 +13,13 @@ TFP_Transmitter::TFP_Transmitter()
 };
 
 bool TFP_Transmitter::begin(int ppm_channel) {
-    Serial.println("Setting up PPM");
+    Serial.println("Setting up transmitter PPM");
     ppm.begin(ppm_channel);
 
     while (ppm.available() < 0) {
         delay(10);
     }
-    Serial.println("PPM setup");
+    Serial.println("Transmitter PPM setup");
 
     all_components[0] = &left_stick_x;
     all_components[1] = &left_stick_y;
@@ -30,6 +30,7 @@ bool TFP_Transmitter::begin(int ppm_channel) {
     all_components[6] = &left_switch;
     all_components[7] = &right_switch;
 
+    Serial.println("Updating Transmitter");
     update();
 
     return true;
@@ -42,19 +43,21 @@ void TFP_Transmitter::update() {
 };
 
 void TFP_Transmitter::calibrate() {
+    Serial.println("Calibrating transmitter components");
     for (auto component:all_components) {
         component->calibrate();
     }
 };
 
 void TFP_Transmitter::print_state() {
-    Serial.println("\nCurrent transmitter state:");
+    Serial.println("Current transmitter state:");
     for (auto component:all_components) {
         component->print_state();
     }
 }
 
 void TFP_Transmitter::load_calibration() {
+    Serial.println("Loading transmitter components");
     for (auto component:all_components) {
         component->load_calibration();
     }

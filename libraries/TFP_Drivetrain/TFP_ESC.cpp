@@ -6,6 +6,7 @@ TFP_ESC::TFP_ESC(){
 };
 
 bool TFP_ESC::begin(int pin, TFP_Gyro *gyro_in) {
+    Serial.println("Initialising ESC");
     esc.attach(pin);
     gyro = gyro_in;
     calibration_address = 1500 + pin * sizeof(calibration);
@@ -14,9 +15,13 @@ bool TFP_ESC::begin(int pin, TFP_Gyro *gyro_in) {
 
 void TFP_ESC::calibrate() {
 
-    calibration = ESC_Calibration();
+    Serial.println("Clearing previous calibration");
 
+    calibration = ESC_Calibration();
     stop();
+
+    Serial.println("Calibrating ESC's deadzone max");
+
 
     gyro->wait_for_stationary();
 
@@ -26,6 +31,8 @@ void TFP_ESC::calibrate() {
         delay(100);
     }
     stop();
+
+    Serial.println("Calibrating ESC's deadzone min");
 
     gyro->wait_for_stationary();
 
@@ -41,10 +48,12 @@ void TFP_ESC::calibrate() {
 };
 
 void TFP_ESC::save_calibration() {
+    Serial.println("Saving calibration");
     EEPROM.put(calibration_address, calibration);
 }
 
 void TFP_ESC::load_calibration() {
+    Serial.println("Loading calibration");
     EEPROM.get(calibration_address, calibration);
 }
 
