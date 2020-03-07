@@ -1,7 +1,6 @@
 #include "TFP_Gyro.h"
 
-
-TFP_Gyro::TFP_Gyro(){
+TFP_Gyro::TFP_Gyro() {
 
 };
 
@@ -16,28 +15,36 @@ void TFP_Gyro::update() {
     unsigned long now = millis();
 
     FXA.getEvent(&event);
-    velocity = event.gyro.z - bias;
+    velocity = event.gyro.z - calibration.bias;
     heading += velocity * ((now - last_update) / 1000.0f);
     last_update = now;
 };
 
 void TFP_Gyro::calibrate() {
 
-    bias = 0;
+    calibration.bias = 0;
     heading = 0;
 
     unsigned long start_time = millis();
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < calibration.calibration_samples; i++) {
         update();
-        delay(20);
+        delay(calibration.calibration_duration/calibration.calibration_samples);
     }
     unsigned long calibration_duration_in_millis = millis() - start_time;
-    bias = (1000 * heading) / calibration_duration_in_millis;
+    calibration.bias = (1000 * heading) / calibration_duration_in_millis;
 
     heading = 0;
 
     Serial.print("Bias: ");
-    Serial.println(bias, 4);
+    Serial.println(calibration.bias, 4);
+}
+
+void TFP_Gyro::save_calibration() {
+    EEPROM.put(calibration_address, calibration);
+}
+
+void TFP_Gyro::load_calibration() {
+    EEPROM.get(calibration_address, calibration);
 }
 
 bool TFP_Gyro::is_rotating() {

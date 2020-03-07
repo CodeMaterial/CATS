@@ -4,7 +4,7 @@
 #include <PulsePosition.h>
 
 
-struct Calibration {
+struct Transmitter_Calibration {
     int raw_max = 2000;
     int raw_min = 1000;
     int raw_cen = 1500;
@@ -38,5 +38,5 @@ private:
     const char *name;
     bool binary_mode;
     int raw_value;
-    Calibration calibration;
+    Transmitter_Calibration calibration;
 };

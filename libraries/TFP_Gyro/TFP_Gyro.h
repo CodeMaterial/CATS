@@ -3,6 +3,14 @@
 #include <Adafruit_FXAS21002C.h>
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
+#include <EEPROM.h>
+
+struct Gyro_Calibration {
+    int bias = 0;
+    bool calibrated = false;
+    int calibration_duration = 1000;
+    int calibration_samples = 100;
+};
 
 class TFP_Gyro {
 public:
@@ -14,6 +22,10 @@ public:
 
     void calibrate();
 
+    void save_calibration();
+
+    void load_calibration();
+
     bool is_rotating();
 
 public:
@@ -23,6 +35,7 @@ public:
 private:
     Adafruit_FXAS21002C FXA = Adafruit_FXAS21002C(0x0021002C);
     sensors_event_t event;
-    float bias = 0; // in radians per second
+    Gyro_Calibration calibration;
     unsigned long last_update = 0;
+    const int calibration_address = 1000;
 };
