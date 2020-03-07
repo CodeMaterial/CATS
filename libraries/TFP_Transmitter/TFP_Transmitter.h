@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Arduino.h"
 #include "TFP_Transmitter_Components.h"
 
 class TFP_Transmitter {

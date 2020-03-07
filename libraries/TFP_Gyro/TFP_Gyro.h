@@ -28,6 +28,8 @@ public:
 
     bool is_rotating();
 
+    void TFP_Gyro::wait_for_stationary();
+
 public:
     float heading = 0; // in radians
     float velocity = 0; // in radians per second

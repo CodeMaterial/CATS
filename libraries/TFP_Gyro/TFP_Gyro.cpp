@@ -51,3 +51,9 @@ bool TFP_Gyro::is_rotating() {
     update();
     return abs(velocity) > 0.1;
 }
+
+void TFP_Gyro::wait_for_stationary(){
+    while(is_rotating()){
+        delay(10);
+    }
+}
