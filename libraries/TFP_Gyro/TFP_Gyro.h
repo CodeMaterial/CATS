@@ -28,7 +28,7 @@ public:
 
     bool is_rotating();
 
-    void TFP_Gyro::wait_for_stationary();
+    void wait_for_stationary();
 
 public:
     float heading = 0; // in radians

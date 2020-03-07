@@ -2,10 +2,10 @@
 
 Drivetrain::Drivetrain() {
     gyro.begin();
-    esc_l.attach(5);
-    esc_r.attach(6);
-    esc_l.writeMicroseconds(calibration.l_deadzone_cen);
-    esc_r.writeMicroseconds(calibration.r_deadzone_cen);
+    esc_l.begin(5, &gyro);
+    esc_r.begin(6, &gyro);
+    esc_l.stop();
+    esc_r.stop();
 }
 
 void Drivetrain::calibrate() {
@@ -15,7 +15,7 @@ void Drivetrain::calibrate() {
 
 void Drivetrain::save_calibration() {
     esc_l.save_calibration();
-    esc_r.save_calibrate();
+    esc_r.save_calibration();
 }
 
 void Drivetrain::load_calibration() {
@@ -23,12 +23,12 @@ void Drivetrain::load_calibration() {
     esc_r.load_calibration();
 }
 
-void SkidSteer(int left, int right) {
+void Drivetrain::SkidSteer(int left, int right) {
     esc_l.set_speed(left);
     esc_r.set_speed(right);
 };
 
-void WheelSteer(int power, int steer) {
+void Drivetrain::WheelSteer(int power, int steer) {
     esc_l.set_speed(power - steer);
     esc_r.set_speed(power + steer);
 };

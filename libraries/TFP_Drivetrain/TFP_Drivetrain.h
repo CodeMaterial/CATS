@@ -22,8 +22,8 @@ public:
     void WheelSteer(int power, int steer);
 
 private:
+    TFP_Gyro gyro;
     TFP_ESC esc_l;
     TFP_ESC esc_r;
-    TFP_Gyro gyro;
     Drivetrain_Calibration calibration;
-}
+};

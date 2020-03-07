@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Servo.h>
 #include "TFP_Gyro.h"
 
 struct ESC_Calibration {
@@ -10,9 +11,9 @@ struct ESC_Calibration {
 
 class TFP_ESC {
 public:
-    TFP_ESC(TFP_Gyro *gyro);
+    TFP_ESC();
 
-    bool begin(int pin);
+    bool begin(int pin, TFP_Gyro *gyro_in);
 
     void calibrate();
 
@@ -25,6 +26,8 @@ public:
     void stop();
 
     int speed;
+
+    float max_speed = 0.5;
 
 private:
     TFP_Gyro *gyro;

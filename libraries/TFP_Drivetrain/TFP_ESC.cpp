@@ -1,16 +1,20 @@
 #include "TFP_ESC.h"
 
 
-TFP_ESC::TFP_ESC(TFP_Gyro *gyro_in) : gyro(gyro_in) {
+TFP_ESC::TFP_ESC(){
 
 };
 
-bool TFP_ESC::begin(int pin){
+bool TFP_ESC::begin(int pin, TFP_Gyro *gyro_in) {
     esc.attach(pin);
-    calibration_address = 1500 + pin*sizeof(calibration);
+    gyro = gyro_in;
+    calibration_address = 1500 + pin * sizeof(calibration);
+    return true;
 };
 
 void TFP_ESC::calibrate() {
+
+    calibration = ESC_Calibration();
 
     stop();
 
@@ -18,7 +22,16 @@ void TFP_ESC::calibrate() {
 
     while (!gyro->is_rotating()) {
         calibration.deadzone_max += 1;
-        esc.writeMicroseconds(calibration.l_deadzone_max);
+        esc.writeMicroseconds(calibration.deadzone_max);
+        delay(100);
+    }
+    stop();
+
+    gyro->wait_for_stationary();
+
+    while (!gyro->is_rotating()) {
+        calibration.deadzone_min -= 1;
+        esc.writeMicroseconds(calibration.deadzone_min);
         delay(100);
     }
     stop();
@@ -35,8 +48,23 @@ void TFP_ESC::load_calibration() {
     EEPROM.get(calibration_address, calibration);
 }
 
-void TFP_ESC::set_speed(int speed);
+void TFP_ESC::set_speed(int speed) {
 
-void stop(){
-    esc.writeMicroseconds(calibration.deadzone_cen)
+    speed *= max_speed;
+
+
+    int pwm_duration = calibration.deadzone_cen;
+
+    if (speed > 0) {
+        pwm_duration = map(speed, 0, 500, calibration.deadzone_max, 2000);
+    } else if (speed < 0) {
+        pwm_duration = map(speed, 0, -500, calibration.deadzone_min, 1000);
+    }
+
+    esc.writeMicroseconds(constrain(pwm_duration, 1000, 2000));
+
+};
+
+void TFP_ESC::stop() {
+    esc.writeMicroseconds(calibration.deadzone_cen);
 };
