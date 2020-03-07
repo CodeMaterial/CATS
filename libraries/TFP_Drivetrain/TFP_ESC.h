@@ -25,6 +25,8 @@ public:
 
     void stop();
 
+    void print_state();
+
     int speed;
 
     float max_speed = 0.5;

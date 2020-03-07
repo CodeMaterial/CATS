@@ -15,6 +15,7 @@ bool Drivetrain::begin(){
 
 void Drivetrain::calibrate() {
     Serial.println("Calibrating drivetrain");
+    gyro.calibrate();
     esc_l.calibrate();
     esc_r.calibrate();
 };

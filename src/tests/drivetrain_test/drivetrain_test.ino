@@ -11,6 +11,7 @@ void setup(void) {
     Serial.println("Serial connected");
 
     drivetrain.begin();
+    drivetrain.calibrate();
 }
 
 

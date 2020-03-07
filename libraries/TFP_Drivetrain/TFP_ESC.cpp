@@ -22,26 +22,37 @@ void TFP_ESC::calibrate() {
 
     Serial.println("Calibrating ESC's deadzone max");
 
-
     gyro->wait_for_stationary();
+    delay(1000);
 
+    Serial.print("Increasing deadzone max");
     while (!gyro->is_rotating()) {
         calibration.deadzone_max += 1;
         esc.writeMicroseconds(calibration.deadzone_max);
+        Serial.print(".");
         delay(100);
     }
+    Serial.println("");
     stop();
 
     Serial.println("Calibrating ESC's deadzone min");
 
     gyro->wait_for_stationary();
+    delay(1000);
 
+    Serial.print("Decreasing deadzone min to ");
     while (!gyro->is_rotating()) {
         calibration.deadzone_min -= 1;
         esc.writeMicroseconds(calibration.deadzone_min);
+        Serial.print(".");
         delay(100);
     }
+    Serial.println("");
     stop();
+
+    calibration.deadzone_cen = (calibration.deadzone_max + calibration.deadzone_min) / 2;
+
+    print_state();
 
     save_calibration();
 
@@ -76,4 +87,13 @@ void TFP_ESC::set_speed(int speed) {
 
 void TFP_ESC::stop() {
     esc.writeMicroseconds(calibration.deadzone_cen);
+};
+
+void TFP_ESC::print_state() {
+    Serial.print("deadzone_max: ");
+    Serial.print(calibration.deadzone_max);
+    Serial.print(" | deadzone_cen: ");
+    Serial.print(calibration.deadzone_cen);
+    Serial.print(" | deadzone_min: ");
+    Serial.println(calibration.deadzone_min);
 };
