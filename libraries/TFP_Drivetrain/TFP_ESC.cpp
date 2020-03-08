@@ -68,6 +68,11 @@ void TFP_ESC::load_calibration() {
     EEPROM.get(calibration_address, calibration);
 }
 
+void TFP_ESC::reset_calibration(){
+    Serial.println("Resetting ESC calibration");
+    calibration = ESC_Calibration();
+}
+
 void TFP_ESC::set_speed(int speed_in) {
 
     speed = speed_in*max_speed;

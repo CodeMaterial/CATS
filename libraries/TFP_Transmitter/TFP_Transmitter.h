@@ -12,6 +12,8 @@ public:
 
     void load_calibration();
 
+    void reset_calibration();
+
     bool begin(int ppm_pin);
 
     void print_state();

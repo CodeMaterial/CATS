@@ -32,6 +32,12 @@ void Drivetrain::load_calibration() {
     esc_r.load_calibration();
 }
 
+void Drivetrain::reset_calibration() {
+    Serial.println("Resetting drivetrain calibration");
+    esc_l.reset_calibration();
+    esc_r.reset_calibration();
+}
+
 void Drivetrain::skid_steer(int left, int right) {
     esc_l.set_speed(left);
     esc_r.set_speed(right);

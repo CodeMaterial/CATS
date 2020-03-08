@@ -4,26 +4,34 @@
 Drivetrain drivetrain;
 TFP_Transmitter transmitter;
 
+int mode = 0;
+
 void setup(void) {
     Serial.begin(9600);
 
-    while (!Serial) {
-        delay(1);
-    }
-    Serial.println("Serial connected");
-
     drivetrain.begin();
-    drivetrain.load_calibration();
-
     transmitter.begin(10);
-    transmitter.load_calibration();
 }
 
 
 void loop() {
     transmitter.update();
-    transmitter.print_state();
-    drivetrain.wheel_steer(transmitter.left_stick_y.value, transmitter.left_stick_x.value);
-    drivetrain.print_state();
+
+    int steer = transmitter.left_stick_x.value * (transmitter.left_knob.value / 1000.0f) +
+                (transmitter.right_knob.value - 500)*0.1;
+
+    drivetrain.wheel_steer(transmitter.left_stick_y.value, steer);
+
+    if (transmitter.left_switch.value != mode) {
+        mode = transmitter.left_switch.value;
+        if (mode == 0) {
+            drivetrain.reset_calibration();
+            transmitter.reset_calibration();
+        } else if (mode == 1) {
+            drivetrain.load_calibration();
+            transmitter.load_calibration();
+        }
+    }
+
     delay(10);
 }

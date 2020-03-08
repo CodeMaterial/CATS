@@ -1,4 +1,3 @@
-#include <Servo.h>
 #include "TFP_Gyro.h"
 #include "TFP_ESC.h"
 
@@ -18,6 +17,8 @@ public:
     void save_calibration();
 
     void load_calibration();
+
+    void reset_calibration();
 
     void skid_steer(int left, int right);
 

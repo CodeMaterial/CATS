@@ -31,6 +31,8 @@ public:
 
     void load_calibration();
 
+    void reset_calibration();
+
     bool is_calibrated();
 
     void update();

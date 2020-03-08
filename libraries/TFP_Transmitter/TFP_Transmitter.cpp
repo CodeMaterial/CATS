@@ -62,3 +62,10 @@ void TFP_Transmitter::load_calibration() {
         component->load_calibration();
     }
 }
+
+void TFP_Transmitter::reset_calibration() {
+    Serial.println("Resetting transmitter components");
+    for (auto component:all_components) {
+        component->reset_calibration();
+    }
+}

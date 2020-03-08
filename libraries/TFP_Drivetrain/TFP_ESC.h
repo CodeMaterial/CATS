@@ -21,6 +21,8 @@ public:
 
     void load_calibration();
 
+    void reset_calibration();
+
     void set_speed(int speed);
 
     void stop();

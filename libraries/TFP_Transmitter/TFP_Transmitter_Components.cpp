@@ -107,6 +107,10 @@ void Transmitter_Component::load_calibration() {
     EEPROM.get(channel * sizeof(calibration), calibration);
 };
 
+void Transmitter_Component::reset_calibration() {
+    Serial.println("Resetting transmitter component calibration");
+    calibration = Transmitter_Calibration();
+};
 
 bool Transmitter_Component::is_calibrated() {
     return calibration.calibrated;
