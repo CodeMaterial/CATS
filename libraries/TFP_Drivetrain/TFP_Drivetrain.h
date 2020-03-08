@@ -23,6 +23,8 @@ public:
 
     void wheel_steer(int power, int steer);
 
+    void print_state();
+
 private:
     TFP_Gyro gyro;
     TFP_ESC esc_l;

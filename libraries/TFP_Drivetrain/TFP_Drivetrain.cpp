@@ -41,3 +41,9 @@ void Drivetrain::wheel_steer(int power, int steer) {
     esc_l.set_speed(power - steer);
     esc_r.set_speed(power + steer);
 };
+
+void Drivetrain::print_state() {
+    Serial.println("Drivetrain state:");
+    esc_l.print_state();
+    esc_r.print_state();
+}

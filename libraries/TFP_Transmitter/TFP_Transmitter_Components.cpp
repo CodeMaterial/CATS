@@ -20,9 +20,10 @@ Transmitter_Component::Transmitter_Component(PulsePositionInput *ppm_in, int cha
 void Transmitter_Component::calibrate() {
 
     update();
-
+    Serial.println(mode);
     switch (mode) {
-        case Switch:
+        case Switch: {
+
             int previous_raw_value = raw_value;
             Serial.print("\n\n>> Please flip the ");
             Serial.println(name);
@@ -37,9 +38,9 @@ void Transmitter_Component::calibrate() {
                 }
             }
             break;
-
+        }
         case Knob:
-        case Stick:
+        case Stick: {
 
             Serial.print("\n\n>> Please move ");
             Serial.print(name);
@@ -73,13 +74,18 @@ void Transmitter_Component::calibrate() {
                 calibration.raw_min = motion_min;
                 calibration.raw_max = motion_max;
 
-                if (mode = Stick) {
+                if (mode == Stick) {
                     calibration.raw_cen = (motion_max + motion_min) / 2;
-                    calibration.deadzone_min = calibration.raw_cen + 20;
-                    calibration.deadzone_max = calibration.raw_cen - 20;
+                    calibration.deadzone_min = calibration.raw_cen - 20;
+                    calibration.deadzone_max = calibration.raw_cen + 20;
                 }
             }
             break;
+        }
+        default: {
+            Serial.println("No matching case!");
+        }
+
     }
 
     print_state();
@@ -95,11 +101,11 @@ void Transmitter_Component::calibrate() {
 
 void Transmitter_Component::save_calibration() {
     EEPROM.put(channel * sizeof(calibration), calibration);
-}
+};
 
 void Transmitter_Component::load_calibration() {
     EEPROM.get(channel * sizeof(calibration), calibration);
-}
+};
 
 
 bool Transmitter_Component::is_calibrated() {

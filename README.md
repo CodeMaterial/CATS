@@ -1,9 +1,7 @@
 # So many frames!
 
 - World Frame - Right Handed
-- Stick Frame - Right Handed
-- Everything is right handed
-- Just as a heads up
+- Stick Frame - Left Handed
 
 # So many data types!
 

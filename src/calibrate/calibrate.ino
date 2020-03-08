@@ -13,17 +13,15 @@ void setup(void) {
     Serial.println("Serial connected");
 
     drivetrain.begin();
-    drivetrain.load_calibration();
-
     transmitter.begin(10);
-    transmitter.load_calibration();
+
+    transmitter.calibrate();
+    drivetrain.calibrate();
 }
 
 
 void loop() {
     transmitter.update();
     transmitter.print_state();
-    drivetrain.wheel_steer(transmitter.left_stick_y.value, transmitter.left_stick_x.value);
-    drivetrain.print_state();
     delay(10);
 }

@@ -68,10 +68,9 @@ void TFP_ESC::load_calibration() {
     EEPROM.get(calibration_address, calibration);
 }
 
-void TFP_ESC::set_speed(int speed) {
+void TFP_ESC::set_speed(int speed_in) {
 
-    speed *= max_speed;
-
+    speed = speed_in*max_speed;
 
     int pwm_duration = calibration.deadzone_cen;
 
@@ -90,7 +89,9 @@ void TFP_ESC::stop() {
 };
 
 void TFP_ESC::print_state() {
-    Serial.print("deadzone_max: ");
+    Serial.print("Speed: ");
+    Serial.print(speed);
+    Serial.print(" | deadzone_max: ");
     Serial.print(calibration.deadzone_max);
     Serial.print(" | deadzone_cen: ");
     Serial.print(calibration.deadzone_cen);
