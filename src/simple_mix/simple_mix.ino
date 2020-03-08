@@ -17,8 +17,7 @@ void setup(void) {
 void loop() {
     transmitter.update();
 
-    int steer = transmitter.left_stick_x.value * (transmitter.left_knob.value / 1000.0f) +
-                (transmitter.right_knob.value - 500)*0.1;
+    int steer = transmitter.left_stick_x.value * (transmitter.left_knob.value / 1000.0f);
 
     drivetrain.wheel_steer(transmitter.left_stick_y.value, steer);
 

@@ -85,7 +85,7 @@ void TFP_ESC::set_speed(int speed_in) {
         pwm_duration = map(speed, 0, -500, calibration.deadzone_min, 1000);
     }
 
-    esc.writeMicroseconds(constrain(pwm_duration, 1000, 2000));
+    esc.writeMicroseconds(constrain(pwm_duration, 1060, 1860));
 
 };
 
