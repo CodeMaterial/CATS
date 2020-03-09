@@ -29,15 +29,30 @@ void setup() {
 
 void loop() {
 
+    transmitter.update();
+
+    if(transmitter.left_switch.value){
+        drivetrain.begin();
+        drivetrain.load_calibration();
+        transmitter.begin(10);
+        transmitter.load_calibration();
+        gyro.begin();
+        gyro.calibrate();
+        while(transmitter.left_switch.value){
+            transmitter.update();
+            delay(10);
+        }
+    }
+
     Kp = transmitter.right_stick_y.value;
-    Ki = Kp * (transmitter.right_knob.value / 1000.0f);
-    Kd = Ki * (transmitter.left_knob.value / 1000.0f);
+    Ki = transmitter.right_knob.value/100.0f;
+    Kd = transmitter.left_knob.value*100;
 
     pid.tune(Kp, Ki, Kd);
 
     target = (transmitter.left_stick_x.value / 500.0f) * 1.5708f;
 
-    pid.setpoint(setpoint);
+    pid.setpoint(target);
 
     gyro.update();
     double pid_output = pid.compute(gyro.heading);

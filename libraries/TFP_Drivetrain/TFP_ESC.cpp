@@ -5,10 +5,9 @@ TFP_ESC::TFP_ESC(){
 
 };
 
-bool TFP_ESC::begin(int pin, TFP_Gyro *gyro_in) {
+bool TFP_ESC::begin(int pin) {
     Serial.println("Initialising ESC");
     esc.attach(pin);
-    gyro = gyro_in;
     calibration_address = 1500 + pin * sizeof(calibration);
     return true;
 };

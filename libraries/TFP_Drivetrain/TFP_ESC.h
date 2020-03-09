@@ -13,7 +13,7 @@ class TFP_ESC {
 public:
     TFP_ESC();
 
-    bool begin(int pin, TFP_Gyro *gyro_in);
+    bool begin(int pin);
 
     void calibrate(TFP_Gyro *gyro);
 

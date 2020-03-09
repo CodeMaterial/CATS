@@ -5,8 +5,8 @@ Drivetrain::Drivetrain() {
 
 bool Drivetrain::begin() {
     Serial.println("Initialising Drivetrain");
-    esc_l.begin(5, &gyro);
-    esc_r.begin(6, &gyro);
+    esc_l.begin(5);
+    esc_r.begin(6);
     esc_l.stop();
     esc_r.stop();
     return true;

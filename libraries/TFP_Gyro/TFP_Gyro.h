@@ -8,8 +8,8 @@
 struct Gyro_Calibration {
     int bias = 0;
     bool calibrated = false;
-    int calibration_duration = 1000;
-    int calibration_samples = 100;
+    int calibration_duration = 3000;
+    int calibration_samples = 300;
 };
 
 class TFP_Gyro {
