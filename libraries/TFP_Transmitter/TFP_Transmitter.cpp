@@ -5,7 +5,7 @@ TFP_Transmitter::TFP_Transmitter()
         : left_stick_x(&ppm, 4, "Left Stick X", Stick),
           left_stick_y(&ppm, 2, "Left Stick Y", Stick),
           right_stick_x(&ppm, 1, "Right Stick X", Stick),
-          right_stick_y(&ppm, 3, "Right Stick Y", Stick),
+          right_stick_y(&ppm, 3, "Right Stick Y", Knob),
           left_knob(&ppm, 5, "Left Knob", Knob),
           right_knob(&ppm, 6, "Right Knob", Knob),
           left_switch(&ppm, 7, "Left Switch", Switch),
