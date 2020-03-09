@@ -12,7 +12,7 @@ public:
 
     bool begin();
 
-    void calibrate();
+    void calibrate(TFP_Gyro *gyro);
 
     void save_calibration();
 
@@ -27,7 +27,6 @@ public:
     void print_state();
 
 private:
-    TFP_Gyro gyro;
     TFP_ESC esc_l;
     TFP_ESC esc_r;
     Drivetrain_Calibration calibration;

@@ -10,7 +10,9 @@ void setup(void) {
     Serial.begin(9600);
 
     drivetrain.begin();
+    drivetrain.load_calibration();
     transmitter.begin(10);
+    transmitter.load_calibration();
 }
 
 

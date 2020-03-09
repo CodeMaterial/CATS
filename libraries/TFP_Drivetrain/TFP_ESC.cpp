@@ -13,7 +13,7 @@ bool TFP_ESC::begin(int pin, TFP_Gyro *gyro_in) {
     return true;
 };
 
-void TFP_ESC::calibrate() {
+void TFP_ESC::calibrate(TFP_Gyro *gyro) {
 
     Serial.println("Clearing previous calibration");
 

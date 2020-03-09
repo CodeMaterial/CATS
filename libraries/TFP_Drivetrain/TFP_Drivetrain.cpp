@@ -3,9 +3,8 @@
 Drivetrain::Drivetrain() {
 }
 
-bool Drivetrain::begin(){
+bool Drivetrain::begin() {
     Serial.println("Initialising Drivetrain");
-    gyro.begin();
     esc_l.begin(5, &gyro);
     esc_r.begin(6, &gyro);
     esc_l.stop();
@@ -13,11 +12,10 @@ bool Drivetrain::begin(){
     return true;
 }
 
-void Drivetrain::calibrate() {
+void Drivetrain::calibrate(TFP_Gyro *gyro) {
     Serial.println("Calibrating drivetrain");
-    gyro.calibrate();
-    esc_l.calibrate();
-    esc_r.calibrate();
+    esc_l.calibrate(gyro);
+    esc_r.calibrate(gyro);
 };
 
 void Drivetrain::save_calibration() {

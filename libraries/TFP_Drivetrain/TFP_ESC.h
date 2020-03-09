@@ -15,7 +15,7 @@ public:
 
     bool begin(int pin, TFP_Gyro *gyro_in);
 
-    void calibrate();
+    void calibrate(TFP_Gyro *gyro);
 
     void save_calibration();
 
@@ -34,7 +34,6 @@ public:
     float max_speed = 0.5;
 
 private:
-    TFP_Gyro *gyro;
     Servo esc;
     int calibration_address;
     int pulse_size = 1500;
