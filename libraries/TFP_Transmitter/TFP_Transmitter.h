@@ -18,16 +18,16 @@ public:
 
     void print_state();
 
-public:
-    Transmitter_Component left_stick_x;
-    Transmitter_Component left_stick_y;
-    Transmitter_Component right_stick_x;
-    Transmitter_Component right_stick_y;
-    Transmitter_Component left_knob;
-    Transmitter_Component right_knob;
-    Transmitter_Component left_switch;
-    Transmitter_Component right_switch;
+    Transmitter_Component left_stick_x();
+    Transmitter_Component left_stick_y();
+    Transmitter_Component right_stick_x();
+    Transmitter_Component right_stick_y();
+    Transmitter_Component left_knob();
+    Transmitter_Component right_knob();
+    Transmitter_Component left_lever();
+    Transmitter_Component right_lever();
+
 private:
     PulsePositionInput ppm;
-    Transmitter_Component *all_components[8];
+    Transmitter_Component all_components[8];
 };

@@ -31,14 +31,14 @@ void loop() {
 
     transmitter.update();
 
-    if(transmitter.left_switch.value){
+    if(transmitter.left_lever.value){
         drivetrain.begin();
         drivetrain.load_calibration();
         transmitter.begin(10);
         transmitter.load_calibration();
         gyro.begin();
         gyro.calibrate();
-        while(transmitter.left_switch.value){
+        while(transmitter.left_lever.value){
             transmitter.update();
             delay(10);
         }

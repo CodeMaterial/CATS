@@ -4,7 +4,7 @@
 #include <PulsePosition.h>
 
 enum Component_Mode {
-    Switch,
+    Lever,
     Knob,
     Stick
 };
@@ -16,7 +16,7 @@ struct Transmitter_Calibration {
     int deadzone_max = 1500 + 20;
     int deadzone_min = 1500 - 20;
     bool calibrated = false;
-    int calibration_timeout = 10000;
+    int timeout = 10000;
 };
 
 class Transmitter_Component {
@@ -39,7 +39,7 @@ public:
 
     void print_state();
 
-    int value;
+    int get_value();
 
 private:
     PulsePositionInput *ppm;
@@ -47,5 +47,6 @@ private:
     const char *name;
     Component_Mode mode;
     int raw_value;
+    int value;
     Transmitter_Calibration calibration;
 };

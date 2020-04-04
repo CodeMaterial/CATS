@@ -19,12 +19,12 @@ void setup(void) {
 void loop() {
     transmitter.update();
 
-    int steer = transmitter.left_stick_x.value * (transmitter.left_knob.value / 1000.0f);
+    int steer = transmitter.left_stick_x() * (transmitter.left_knob() / 1000.0f);
 
-    drivetrain.wheel_steer(transmitter.left_stick_y.value, steer);
+    drivetrain.wheel_steer(transmitter.left_stick_y(), steer);
 
-    if (transmitter.left_switch.value != mode) {
-        mode = transmitter.left_switch.value;
+    if (transmitter.left_lever() != mode) {
+        mode = transmitter.left_lever();
         if (mode == 0) {
             drivetrain.reset_calibration();
             transmitter.reset_calibration();

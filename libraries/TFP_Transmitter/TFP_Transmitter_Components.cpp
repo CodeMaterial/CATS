@@ -4,7 +4,7 @@
 Transmitter_Component::Transmitter_Component(PulsePositionInput *ppm_in, int channel_in, Component_Mode mode_in)
         : ppm(ppm_in),
           channel(channel_in),
-          name("Unknown Knob"),
+          name("Unknown Component"),
           mode(mode_in) {
 };
 
@@ -16,13 +16,14 @@ Transmitter_Component::Transmitter_Component(PulsePositionInput *ppm_in, int cha
           mode(mode_in) {
 };
 
+int get_value() { return value }
 
 void Transmitter_Component::calibrate() {
 
-    update();
+    raw_value = ppm->read(channel);
     Serial.println(mode);
     switch (mode) {
-        case Switch: {
+        case Lever:
 
             int previous_raw_value = raw_value;
             Serial.print("\n\n>> Please flip the ");
@@ -30,7 +31,7 @@ void Transmitter_Component::calibrate() {
 
             for (int i = 0; i < (calibration.calibration_timeout / 10); i++) {
                 delay(10);
-                update();
+                raw_value = ppm->read(channel);
                 if (abs(previous_raw_value - raw_value) > 100) {
                     calibration.raw_cen = (previous_raw_value + raw_value) / 2;
                     calibration.calibrated = true;
@@ -38,9 +39,9 @@ void Transmitter_Component::calibrate() {
                 }
             }
             break;
-        }
+
         case Knob:
-        case Stick: {
+        case Stick:
 
             Serial.print("\n\n>> Please move ");
             Serial.print(name);
@@ -50,7 +51,7 @@ void Transmitter_Component::calibrate() {
 
             for (int i = 0; i < (calibration.calibration_timeout / 10); i++) {
                 delay(10);
-                update();
+                raw_value = ppm->read(channel);
                 if (abs(value - resting) > 100) {
                     break;
                 }
@@ -61,7 +62,7 @@ void Transmitter_Component::calibrate() {
             int motion_max = calibration.raw_cen;
             for (int i = 0; i < 300; i++) {
                 delay(10);
-                update();
+                raw_value = ppm->read(channel);
                 if (raw_value > motion_max) {
                     motion_max = raw_value;
                 }
@@ -81,7 +82,7 @@ void Transmitter_Component::calibrate() {
                 }
             }
             break;
-        }
+
         default: {
             Serial.println("No matching case!");
         }
@@ -119,7 +120,7 @@ bool Transmitter_Component::is_calibrated() {
 void Transmitter_Component::update() {
     raw_value = ppm->read(channel);
     switch (mode) {
-        case Switch:
+        case Lever:
             value = (raw_value > calibration.raw_cen);
             break;
         case Knob:
